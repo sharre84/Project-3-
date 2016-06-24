@@ -1,0 +1,20 @@
+{
+  "name": "project-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lawrencegomez/Project-3-.git"
+  },
+  "author": "lawrence, shahrooz, hines",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lawrencegomez/Project-3-/issues"
+  },
+  "homepage": "https://github.com/lawrencegomez/Project-3-#readme"
+}
