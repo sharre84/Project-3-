@@ -13,7 +13,6 @@ userRouter.route('/login')
     failureRedirect: '/login'
   }))
 
-
 userRouter.route('/signup')
   .get(function(req, res){
     res.render('signup', {flash: req.flash('signupMessage')})
@@ -24,14 +23,18 @@ userRouter.route('/signup')
   }))
 
 userRouter.get('/profile', isLoggedIn, function(req,res) {
-  //before someone goes into the profile, run isLoggedIn before the function
-  //render the user's profile view (only if they're logged in...)
-  //cookie will be the deciding factor for which user to show, so no need id
   res.render('profile', {user: req.user})
 })
 
+userRouter.route('/user/:id')
+  .patch(function (req, res){
+    if(err) console.log(err)
+User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, user){
+  res.json({message: "User profile updated!", success: true, user: user})
+})
+  })
+
 userRouter.get('logout', function(req, res) {
-  //destroy the session, and redirect the user back to the home page...
   req.logout()
   res.redirect('/')
 })
