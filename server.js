@@ -6,14 +6,48 @@ var
   mongoose = require('mongoose'),
   logger = require('morgan'),
   dotenv = require('dotenv').load({silent: true}), // silent: true just ensures the program doesn't throw an error if it can't find the dotenv file
+  ejs = require('ejs'),
+  ejsLayouts = require('express-ejs-layouts'),
+  flash = require('connect-flash'),
+  cookieParser = require('cookie-parser'), // used to read the cookies that are created
+  bodyParser = require('body-parser'),
+  session = require('express-session'), // used to create cookies
+  passport = require('passport'), // used for authentication
+  passportConfig = require('./config/passport.js'),
   nutritionix = require('nutritionix')({
       appId: "027e373f",
       appKey: "4d32fcc05f9358d893602b98daa6a6f7"
   }, false),
   PORT = process.env.PORT || 3000 // heroku doesn't like port 3000 so this ensures heroku will pick its own port or use 3000
 
+// connect to mongodb database
+mongoose.connect('mongodb://localhost/project-3', function(err){
+  if (err) return console.log(err);
+  console.log("Connected to MongoDB (project-3)");
+})
 
+// middleware
 app.use(bodyParser.json());
+app.use(express.static('./public'))
+app.use(logger('dev'))
+app.use(cookieParser())
+app.use(bodyParser.urlencoded({extended: false})) // this allows us to use our forms with bodyparser
+
+// ejs configuration
+app.set('view engine', 'ejs')
+app.use(ejsLayouts)
+app.use(flash())
+
+// this is the session and passport middleware
+app.use(session({
+	cookie: {_expires: 60000000}, // 16.6 hours in milliseconds
+	secret: "Wazzzuuuup", // this adds an encrypter version of this secret so that a user cant just add a cookie in the browser and be logged in...very cruial
+	resave: true, // if you are continually using the site, you will stay logged in as long as you want
+	saveUninitialized: false // means, "do you want to create a cookie even if the login fails?".. answer is NO
+}))
+app.use(passport.initialize())
+app.use(passport.session()) // this is what allows the cookie to get created, when necessary
+
 
 
 app.post('/', function(req, res) {
