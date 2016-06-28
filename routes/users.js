@@ -22,18 +22,20 @@ userRouter.route('/signup')
     failureRedirect: '/signup'
   }))
 
-userRouter.get('/profile', isLoggedIn, function(req,res) {
-  res.render('profile', {user: req.user})
-})
+// userRouter.get('/profile', isLoggedIn, function(req,res) {
+//   res.render('profile', {user: req.user})
+// })
 
-userRouter.route('/user/:id')
+userRouter.route('/profile')
+  .get(function(req, res){
+    res.render('profile', {user: req.user})
+  })
   .patch(function (req, res){
     if(err) console.log(err)
-User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, user){
-  res.json({message: "User profile updated!", success: true, user: user})
-})
+    User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, user){
+      res.json({message: "User profile updated!", success: true, user: user})
+    })
   })
-
 
 userRouter.get('/logout', function(req, res) {
   req.logout()
