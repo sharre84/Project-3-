@@ -89,7 +89,7 @@
           json: true,
           data: foodSearch
         }).done(function(data){
-          // console.log(data.hits[0].fields);
+          console.log(data);
           for (var i = 0; i < data.hits.length; i ++){
             resultsTableBody.append('<tr id="' + data.hits[i]._id + '"><td><button class="add">Add</button></td><td>' +
             data.hits[i].fields.brand_name + '</td><td>' + data.hits[i].fields.nf_serving_size_qty + '</td><td>' +
@@ -104,12 +104,23 @@
     $('body').on('click', '.add', function(){
       btn = $(this)
       itemId = btn.parent().parent().attr('id')
-      row = btn.parent().siblings();
-      logTableBody.append('<tr id="' + itemId + '"><td>' + row[0].innerHTML + '</td><td>' +
-      row[1].innerHTML + '</td><td>' +
-      row[2] .innerHTML+ '</td><td>' + row[3].innerHTML + '</td><td>' +
-      row[4].innerHTML + '</td><td>' + row[5].innerHTML + '</td><td>' +
-      row[6].innerHTML + '</td></tr>')
+      fields = btn.parent().siblings();
+      var data = {};
+      data.brand = fields[0].innerText
+      console.log(fields);
+      $.ajax({
+        url: '/user/<%= user._id %>/food',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(fields)
+      }).done(function(data){
+        console.log(data);
+        // logTableBody.append('<tr id="' + itemId + '"><td>' + row[0].innerHTML + '</td><td>' +
+        // row[1].innerHTML + '</td><td>' +
+        // row[2] .innerHTML+ '</td><td>' + row[3].innerHTML + '</td><td>' +
+        // row[4].innerHTML + '</td><td>' + row[5].innerHTML + '</td><td>' +
+        // row[6].innerHTML + '</td></tr>')
+      })
     })
 
 
