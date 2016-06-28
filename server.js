@@ -18,7 +18,8 @@ var
       appId: "027e373f",
       appKey: "4d32fcc05f9358d893602b98daa6a6f7"
   }, false),
-  PORT = process.env.PORT || 3000 // heroku doesn't like port 3000 so this ensures heroku will pick its own port or use 3000
+  PORT = process.env.PORT || 3000, // heroku doesn't like port 3000 so this ensures heroku will pick its own port or use 3000
+  userRoutes = require('./routes/users.js')
 
 // connect to mongodb database
 mongoose.connect('mongodb://localhost/project-3', function(err){
@@ -77,8 +78,17 @@ app.post('/', function(req, res) {
   })
 })
 
+app.get('/', function(req, res){
+  res.render('landing.ejs', {flash: req.flash('loginMessage')})
+})
 
 
+//root route
+app.get('/user', function(req,res){
+	res.render('index')
+})
+
+app.use('/', userRoutes)
 
 
 // Connec to server

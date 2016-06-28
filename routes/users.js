@@ -34,8 +34,8 @@ User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, user)
 })
   })
 
- 
-userRouter.get('logout', function(req, res) {
+
+userRouter.get('/logout', function(req, res) {
   req.logout()
   res.redirect('/')
 })
