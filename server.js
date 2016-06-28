@@ -52,12 +52,12 @@ app.use(passport.session()) // this is what allows the cookie to get created, wh
 
 
 app.post('/', function(req, res) {
-
   var body = {
                 appId:"027e373f",
                 appKey:"4d32fcc05f9358d893602b98daa6a6f7",
-                query:"Kashi",
-                fields:["item_name","brand_name","nf_calories","nf_serving_size_qty","nf_serving_size_unit", "nf_sugars"],
+                query: req.body.query,
+                results: 5,
+                fields:["item_name","brand_name","nf_serving_size_qty", "nf_serving_size_unit", "nf_calories", "nf_protein", "nf_total_fat", "nf_total_carbohydrate", "images_front_full_url"],
                 sort:{
                   field:"_score",
                   order:"desc"
@@ -74,12 +74,16 @@ app.post('/', function(req, res) {
     body: body
   }, function(err, response, body){
     if (err) return console.log(err);
-    res.json(response.body)
+    res.json(body)
   })
 })
 
 app.get('/', function(req, res){
   res.render('landing.ejs', {flash: req.flash('loginMessage')})
+})
+
+app.get('/main', function(req, res){
+  res.render('main_page.ejs')
 })
 
 
