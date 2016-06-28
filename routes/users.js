@@ -1,6 +1,7 @@
 var
   express = require('express'),
   passport = require('passport'),
+  User = require('../models/User.js'),
   userRouter = express.Router()
 
 userRouter.route('/login')
@@ -26,15 +27,32 @@ userRouter.route('/signup')
 //   res.render('profile', {user: req.user})
 // })
 
-userRouter.route('/profile')
-  .get(function(req, res){
+userRouter.get('/profile', isLoggedIn, function(req, res){
     res.render('profile', {user: req.user})
-  })
-  .patch(function (req, res){
-    if(err) console.log(err)
-    User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, user){
-      res.json({message: "User profile updated!", success: true, user: user})
-    })
+})
+
+
+userRouter.patch('/user/:id', function (req, res){
+  // User.findByIdAndUpdate(req.params.id, {local: req.body}, {new: true}, function(err, user){
+  //   if(err) console.log(err)
+  //   res.json({message: "User profile updated!", success: true, user: user})
+    var updateObject = req.body;
+    var setObject = {};
+
+
+    // this loops through the request object and only updates the selected keys that the user wants to update. (password changes wont work, yet)
+    for (key in req.body) {
+      if (key === 'id') continue;
+      setObject['local.' + key] = req.body[key]
+    }
+
+    var id = req.params.id;
+    console.log(id);
+    User.update({_id  : id}, {$set: setObject}, function(err, user){
+      if (err) return console.log(err);
+      console.log('inside of patch', user);
+      res.json(user)
+    });
   })
 
 userRouter.get('/logout', function(req, res) {
