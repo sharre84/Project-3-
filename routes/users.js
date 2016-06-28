@@ -69,6 +69,14 @@ userRouter.post('/user/:id', function (req, res){
   })
 })
 
+userRouter.get('/user/:id/delete', function(req, res){
+  req.logout()
+  User.findByIdAndRemove(req.params.id, function(err, item){
+    if (err) throw err;
+    res.redirect("/")
+  })
+})
+
 userRouter.get('/logout', function(req, res) {
   req.logout()
   res.redirect('/')
