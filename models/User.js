@@ -8,7 +8,7 @@ var
     servingSizeUnits: String,
     calories: Number,
     protein: Number,
-    Fat: Number,
+    fat: Number,
     carbohydrates: Number
   })
 

@@ -107,14 +107,20 @@
       fields = btn.parent().siblings();
       var data = {};
       data.brand = fields[0].innerText
-      console.log(fields);
+      data.servingSize = fields[1].innerText
+      data.servingSizeUnits = fields[2].innerText
+      data.calories = fields[3].innerText
+      data.protein = fields[4].innerText
+      data.fat = fields[5].innerText
+      data.carbohydrate = fields[6].innerText
+      console.log(data);
       $.ajax({
         url: '/user/<%= user._id %>/food',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify(fields)
+        data: JSON.stringify({fields})
       }).done(function(data){
-        console.log(data);
+        console.log(data.user);
         // logTableBody.append('<tr id="' + itemId + '"><td>' + row[0].innerHTML + '</td><td>' +
         // row[1].innerHTML + '</td><td>' +
         // row[2] .innerHTML+ '</td><td>' + row[3].innerHTML + '</td><td>' +
