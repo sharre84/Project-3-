@@ -82,9 +82,9 @@ app.get('/', function(req, res){
   res.render('landing.ejs', {flash: req.flash('loginMessage')})
 })
 
-app.get('/main', function(req, res){
-  res.render('main_page.ejs')
-})
+// app.get('/main', function(req, res){
+//   res.render('main_page.ejs', {user: req.user})
+// })
 
 
 //root route

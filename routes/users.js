@@ -74,6 +74,24 @@ userRouter.get('/logout', function(req, res) {
   res.redirect('/')
 })
 
+userRouter.get('/main', isLoggedIn, function(req, res){
+  res.render('main_page.ejs', {user: req.user})
+})
+
+userRouter.route('/user/:id/food')
+  .post(function(req, res){
+    User.findById(req.params.id, function(err, user){
+      if (err) return console.log(err);
+      console.log(user);
+      user.food.push(req.body)
+      user.save(function(err){
+        if (err) return console.log(err);
+        console.log(user);
+        res.json({sucess: true, user: user})
+      })
+     })
+  })
+
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()) return next()
   res.redirect('/')
