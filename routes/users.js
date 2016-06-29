@@ -90,7 +90,7 @@ userRouter.route('/user/:id/food')
   .post(function(req, res){
     User.findById(req.params.id, function(err, user){
       if (err) return console.log(err);
-      console.log(user);
+      console.log(req);
       user.food.push(req.body)
       user.save(function(err){
         if (err) return console.log(err);

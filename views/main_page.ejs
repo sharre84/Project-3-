@@ -103,20 +103,21 @@
       data.calories = fields[3].innerText
       data.protein = fields[4].innerText
       data.fat = fields[5].innerText
-      data.carbohydrate = fields[6].innerText
-      console.log(data);
+      data.carbohydrates = fields[6].innerText
       $.ajax({
         url: '/user/<%= user._id %>/food',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({fields})
+        data: JSON.stringify(data)
       }).done(function(data){
         console.log(data.user);
-        // logTableBody.append('<tr id="' + itemId + '"><td>' + row[0].innerHTML + '</td><td>' +
-        // row[1].innerHTML + '</td><td>' +
-        // row[2] .innerHTML+ '</td><td>' + row[3].innerHTML + '</td><td>' +
-        // row[4].innerHTML + '</td><td>' + row[5].innerHTML + '</td><td>' +
-        // row[6].innerHTML + '</td></tr>')
+        foodArr = data.user.food
+        var last = foodArr[data.user.food.length-1];
+        logTableBody.append('<tr id="' + itemId + '"><td>' + last.brand + '</td><td>' +
+        last.servingSize + '</td><td>' +
+        last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
+        last.protein + '</td><td>' + last.fat + '</td><td>' +
+        last.carbohydrates + '</td></tr>')
       })
     })
 
