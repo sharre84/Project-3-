@@ -4,6 +4,7 @@
   <input type="text" id="new-food" name="content" placeholder="Search" required>
   <button class='pure-button' type="submit" id="add-food">Submit</button>
 </form>
+
 <br><br><br><br>
 
 <table id="results-table" class="table">
@@ -81,7 +82,7 @@ submit.on('click', function(text){
     }).done(function(data){
       console.log(data);
       for (var i = 0; i < data.hits.length; i ++){
-        resultsTableBody.append('<tr id="' + data.hits[i]._id + '"><td><button class="add">Add</button></td><td>' +
+        resultsTableBody.append('<tr id="' + data.hits[i]._id + '"><td><div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add Food<span class="caret"></span></button><ul class="dropdown-menu"><li><a href="#" class="breakfast">Breakfast</a></li><li><a href="#">Lunch</a></li><li><a href="#">Dinner</a></li></ul></div></td><td>' +
         data.hits[i].fields.brand_name + '</td><td>' + data.hits[i].fields.nf_serving_size_qty + '</td><td>' +
         data.hits[i].fields.nf_serving_size_unit + '</td><td>' + data.hits[i].fields.nf_calories + '</td><td>' +
         data.hits[i].fields.nf_protein + '</td><td>' + data.hits[i].fields.nf_total_fat + '</td><td>' +
@@ -91,10 +92,19 @@ submit.on('click', function(text){
   }
 })
 
-$('body').on('click', '.add', function(){
+
+// <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example<span class="caret"></span></button><ul class="dropdown-menu"><li><a href="#">HTML</a></li><li><a href="#">CSS</a></li><li><a href="#">JavaScript</a></li></ul>
+// $(".breakfast").click(function(e){
+//   e.preventDefault()
+// })
+
+$('body').on("click", ".breakfast", function(e){
+  e.preventDefault()
+  console.log("hello")
   btn = $(this)
   itemId = btn.parent().parent().attr('id')
-  fields = btn.parent().siblings();
+  fields = btn.parent().parent().parent().parent().siblings();
+  console.log(fields)
   var data = {};
   data.brand = fields[0].innerText
   data.servingSize = fields[1].innerText
