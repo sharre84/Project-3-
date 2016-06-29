@@ -1,142 +1,142 @@
 
 
-    <h1>Search Food:</h1>
+<h1>Search Food:</h1>
 
-    <form class="pure-form" id="new-search" action="/" method="post">
-    <input type="text" id="new-food" name="content" placeholder="Search" required>
-    <button class='pure-button' type="submit" id="add-food">Submit</button>
-    </form>
-      <br><br><br><br>
+<form class="pure-form" id="new-search" action="/" method="post">
+  <input type="text" id="new-food" name="content" placeholder="Search" required>
+  <button class='pure-button' type="submit" id="add-food">Submit</button>
+</form>
+<br><br><br><br>
 
-    <table id="results-table" class="table">
-      <thead>
-          <tr>
-            <th></th>
-            <th>Brand</th>
-            <th>Serving Size</th>
-            <th>Serving Size Unit</th>
-            <th>Calories</th>
-            <th>Protein</th>
-            <th>Fat</th>
-            <th>Carbohydrates</th>
-          </tr>
-      </thead>
+<table id="results-table" class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Brand</th>
+      <th>Serving Size</th>
+      <th>Serving Size Unit</th>
+      <th>Calories</th>
+      <th>Protein</th>
+      <th>Fat</th>
+      <th>Carbohydrates</th>
+    </tr>
+  </thead>
 
-      <tbody id="results-tbody">
+  <tbody id="results-tbody">
 
-      </tbody>
-    </table>
-    <br><br><br><br><br><br>
+  </tbody>
+</table>
+<br><br><br><br><br><br>
 
-    <table id="log-table" class="table">
-      <thead>
-          <tr>
-            <th>Brand</th>
-            <th>Serving Size</th>
-            <th>Serving Size Unit</th>
-            <th>Calories</th>
-            <th>Protein</th>
-            <th>Fat</th>
-            <th>Carbohydrates</th>
-          </tr>
-      </thead>
+<table id="log-table" class="table">
+  <thead>
+    <tr>
+      <th>Brand</th>
+      <th>Serving Size</th>
+      <th>Serving Size Unit</th>
+      <th>Calories</th>
+      <th>Protein</th>
+      <th>Fat</th>
+      <th>Carbohydrates</th>
+    </tr>
+  </thead>
 
-      <tbody id="log-tbody">
+  <tbody id="log-tbody">
 
-      </tbody>
-    </table>
+  </tbody>
+</table>
 
-    <script type="text/javascript">
-      var resultsTableBody = $('#results-table #results-tbody')
-      var submit = $('#add-food')
-      var logTableBody = $('#log-table #log-tbody')
+<script type="text/javascript">
+var resultsTableBody = $('#results-table #results-tbody')
+var submit = $('#add-food')
+var logTableBody = $('#log-table #log-tbody')
 
-      submit.on('click', function(evt){
-        evt.preventDefault();
-      })
+submit.on('click', function(evt){
+  evt.preventDefault();
+})
 
-      // $('#new-food').keyup(function(text){
-    submit.on('click', function(text){
-      var inputValue = $('#new-food').val();
-      // var inputValue = this.value
-      var foodSearch = {
-          appId:"027e373f",
-          appKey:"4d32fcc05f9358d893602b98daa6a6f7",
-          query: inputValue,
-          fields:["item_name","brand_name","nf_serving_size_qty", "nf_serving_size_unit", "nf_calories", "nf_protein", "nf_total_fat", "nf_total_carbohydrate", "images_front_full_url"],
-          sort:{
-            field:"_score",
-            order:"desc"
-          },
-          filters:{
-            item_type:2
-          }
-      }
+// $('#new-food').keyup(function(text){
+submit.on('click', function(text){
+  var inputValue = $('#new-food').val();
+  // var inputValue = this.value
+  var foodSearch = {
+    appId:"027e373f",
+    appKey:"4d32fcc05f9358d893602b98daa6a6f7",
+    query: inputValue,
+    fields:["item_name","brand_name","nf_serving_size_qty", "nf_serving_size_unit", "nf_calories", "nf_protein", "nf_total_fat", "nf_total_carbohydrate", "images_front_full_url"],
+    sort:{
+      field:"_score",
+      order:"desc"
+    },
+    filters:{
+      item_type:2
+    }
+  }
 
-      if (inputValue) {
-        $.ajax({
-          url: '/',
-          method: 'POST',
-          json: true,
-          data: foodSearch
-        }).done(function(data){
-          console.log(data);
-          for (var i = 0; i < data.hits.length; i ++){
-            resultsTableBody.append('<tr id="' + data.hits[i]._id + '"><td><button class="add">Add</button></td><td>' +
-            data.hits[i].fields.brand_name + '</td><td>' + data.hits[i].fields.nf_serving_size_qty + '</td><td>' +
-            data.hits[i].fields.nf_serving_size_unit + '</td><td>' + data.hits[i].fields.nf_calories + '</td><td>' +
-            data.hits[i].fields.nf_protein + '</td><td>' + data.hits[i].fields.nf_total_fat + '</td><td>' +
-            data.hits[i].fields.nf_total_carbohydrate + '</td></tr>')
-          }
-        })
-      }
-    })
-
-    $('body').on('click', '.add', function(){
-      btn = $(this)
-      itemId = btn.parent().parent().attr('id')
-      fields = btn.parent().siblings();
-      var data = {};
-      data.brand = fields[0].innerText
-      data.servingSize = fields[1].innerText
-      data.servingSizeUnits = fields[2].innerText
-      data.calories = fields[3].innerText
-      data.protein = fields[4].innerText
-      data.fat = fields[5].innerText
-      data.carbohydrates = fields[6].innerText
-      $.ajax({
-        url: '/user/<%= user._id %>/food',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data)
-      }).done(function(data){
-        console.log(data.user);
-        foodArr = data.user.food
-        var last = foodArr[data.user.food.length-1];
-        logTableBody.append('<tr id="' + itemId + '"><td>' + last.brand + '</td><td>' +
-        last.servingSize + '</td><td>' +
-        last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
-        last.protein + '</td><td>' + last.fat + '</td><td>' +
-        last.carbohydrates + '</td></tr>')
-      })
-    })
-
+  if (inputValue) {
     $.ajax({
-        url: '/user/<%= user._id %>/food',
-        method: 'GET',
-      })
-      .done(function(data){
-        console.log(data.food[0])
-        var foodArr = data.food
-        for (var i = 0; i < data.food.length; i++) {
-          logTableBody.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
-          foodArr[i].servingSize + '</td><td>' +
-          foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
-          foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
-          foodArr[i].carbohydrates + '</td></tr>')
-        }
-      })
+      url: '/',
+      method: 'POST',
+      json: true,
+      data: foodSearch
+    }).done(function(data){
+      console.log(data);
+      for (var i = 0; i < data.hits.length; i ++){
+        resultsTableBody.append('<tr id="' + data.hits[i]._id + '"><td><button class="add">Add</button></td><td>' +
+        data.hits[i].fields.brand_name + '</td><td>' + data.hits[i].fields.nf_serving_size_qty + '</td><td>' +
+        data.hits[i].fields.nf_serving_size_unit + '</td><td>' + data.hits[i].fields.nf_calories + '</td><td>' +
+        data.hits[i].fields.nf_protein + '</td><td>' + data.hits[i].fields.nf_total_fat + '</td><td>' +
+        data.hits[i].fields.nf_total_carbohydrate + '</td></tr>')
+      }
+    })
+  }
+})
+
+$('body').on('click', '.add', function(){
+  btn = $(this)
+  itemId = btn.parent().parent().attr('id')
+  fields = btn.parent().siblings();
+  var data = {};
+  data.brand = fields[0].innerText
+  data.servingSize = fields[1].innerText
+  data.servingSizeUnits = fields[2].innerText
+  data.calories = fields[3].innerText
+  data.protein = fields[4].innerText
+  data.fat = fields[5].innerText
+  data.carbohydrates = fields[6].innerText
+  $.ajax({
+    url: '/user/<%= user._id %>/food',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(data)
+  }).done(function(data){
+    console.log(data.user);
+    foodArr = data.user.food
+    var last = foodArr[data.user.food.length-1];
+    logTableBody.append('<tr id="' + itemId + '"><td>' + last.brand + '</td><td>' +
+    last.servingSize + '</td><td>' +
+    last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
+    last.protein + '</td><td>' + last.fat + '</td><td>' +
+    last.carbohydrates + '</td></tr>')
+  })
+})
+
+$.ajax({
+  url: '/user/<%= user._id %>/food',
+  method: 'GET',
+})
+.done(function(data){
+  console.log(data.food[0])
+  var foodArr = data.food
+  for (var i = 0; i < data.food.length; i++) {
+    logTableBody.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
+    foodArr[i].servingSize + '</td><td>' +
+    foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
+    foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
+    foodArr[i].carbohydrates + '</td></tr>')
+  }
+})
 
 
 
-    </script>
+</script>
