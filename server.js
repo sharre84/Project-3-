@@ -60,6 +60,11 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session()) // this is what allows the cookie to get created, when necessary
 
+app.use(function(req, res, next) {
+  res.locals.user = req.user
+  next()
+})
+
 
 
 app.post('/', function(req, res) {
