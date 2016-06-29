@@ -107,6 +107,24 @@ userRouter.route('/user/:id/food')
     })
   })
 
+userRouter.route('/user/:id/food/:foodId')
+  .delete(function(req, res){
+    User.findById(req.params.id, function(err, user){
+      if (err) return console.log(err);
+      if (user.food.id(req.params.foodId)) {
+        var item = user.food.id(req.params.foodId);
+        item.remove()
+        user.save(function(err){
+          if (err) return console.log(err);
+        })
+        res.json({message: 'deleted item successfully', user: user})
+      }
+      // console.log(user._id);
+      // console.log(user.food.id);
+      // console.log(req.params.foodId);
+    })
+  })
+
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()) return next()
   res.redirect('/')
