@@ -55,6 +55,7 @@ submit.on('click', function(evt){
 
 // $('#new-food').keyup(function(text){
 submit.on('click', function(text){
+  resultsTableBody.empty()
   var inputValue = $('#new-food').val();
   // var inputValue = this.value
   var foodSearch = {
@@ -111,7 +112,7 @@ $('body').on('click', '.add', function(){
     console.log(data.user);
     foodArr = data.user.food
     var last = foodArr[data.user.food.length-1];
-    logTableBody.append('<tr id="' + itemId + '"><td>' + last.brand + '</td><td>' +
+    logTableBody.append('<tr id="' + itemId + '"><td><button class="delete">Remove</button></td><td>' + last.brand + '</td><td>' +
     last.servingSize + '</td><td>' +
     last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
     last.protein + '</td><td>' + last.fat + '</td><td>' +
@@ -127,12 +128,26 @@ $.ajax({
   console.log(data.food[0])
   var foodArr = data.food
   for (var i = 0; i < data.food.length; i++) {
-    logTableBody.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
+    logTableBody.append('<tr id="' + data.food[i]._id + '"><td><button class="delete">Remove</button></td><td>' + foodArr[i].brand + '</td><td>' +
     foodArr[i].servingSize + '</td><td>' +
     foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
     foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
     foodArr[i].carbohydrates + '</td></tr>')
   }
+})
+
+$('body').on('click', '.delete', function(){
+ var btn = $(this)
+ var itemId = btn.parent().parent().attr('id')
+ $.ajax({
+   url: '/user/<%= user._id %>/food/' + itemId,
+   method: 'DELETE'
+ })
+   .done(function(data){
+    btn.parent().parent().slideUp(function(){
+    btn.parent().parent().remove();
+    })
+   })
 })
 
 
