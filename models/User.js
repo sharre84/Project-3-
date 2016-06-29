@@ -3,6 +3,7 @@ var
   bcrypt = require('bcrypt-nodejs'),
   Schema = mongoose.Schema,
   foodSchema = new Schema ({
+    meal: String,
     brand: String,
     servingSize: Number,
     servingSizeUnits: String,
