@@ -8,8 +8,8 @@ var
   //two dots because you have to go out of config and then go into models
 
 passport.use(new GoogleStrategy({
-  clientID: 1088452267193-8q2n0ncihpebaon4hidr7v5cl9ctpvsm.apps.googleusercontent.com,
-  clientSecret: QEf5N-MgbZc9vCjdkMfB1Kh8,
+  clientID: "1088452267193-8q2n0ncihpebaon4hidr7v5cl9ctpvsm.apps.googleusercontent.com",
+  clientSecret: "QEf5N-MgbZc9vCjdkMfB1Kh8",
   callbackURL: "http://localhost:3000/auth/google/callback"
 },
   function(token, tokenSecret, profile,done){

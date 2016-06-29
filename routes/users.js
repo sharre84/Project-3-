@@ -119,6 +119,7 @@ userRouter.route('/user/:id/food/:foodId')
     })
   })
 
+
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()) return next()
   res.redirect('/')
