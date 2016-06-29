@@ -15,6 +15,7 @@ var
   passport = require('passport'), // used for authentication
   passportConfig = require('./config/passport.js'),
   nodemailer = require('nodemailer'),
+  methodOverride = require('method-override'),
   nutritionix = require('nutritionix')({
       appId: "027e373f",
       appKey: "4d32fcc05f9358d893602b98daa6a6f7"
@@ -28,12 +29,21 @@ mongoose.connect('mongodb://localhost/project-3', function(err){
   console.log("Connected to MongoDB (project-3)");
 })
 
+
 // middleware
 app.use(bodyParser.json());
 app.use(express.static('./public'))
 app.use(logger('dev'))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: false})) // this allows us to use our forms with bodyparser
+app.use(methodOverride(function(req, res){
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
 
 // ejs configuration
 app.set('view engine', 'ejs')
