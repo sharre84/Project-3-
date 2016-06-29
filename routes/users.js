@@ -43,7 +43,7 @@ userRouter.get('/user/:id', function(req, res){
   })
 })
 
-userRouter.post('/user/:id', function (req, res){
+userRouter.patch('/user/:id', function (req, res){
   console.log(req.body);
   User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, user){
     if(err) console.log(err)

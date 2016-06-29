@@ -9,6 +9,7 @@
     <label>Email</label>
     <input type="text" class="form-control" name="local.email" value="<%= user.local.email %>">
   </div>
+  <input type="hidden" name="_method" value="PATCH">
   <button type="submit" class="btn btn-warning btn-lg">Submit</button>
   <a href="/profile" class="btn btn-default btn-sm">Cancel</a>
 </form>
