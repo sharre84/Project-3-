@@ -14,11 +14,6 @@ userRouter.route('/login')
     failureRedirect: '/login'
   }))
 
-// userRouter.route('/update')
-//   .get(function(req, res){
-//     console.log(req.local);
-//     res.render('update', {user: req.user})
-//   })
 
 userRouter.route('/signup')
   .get(function(req, res){
