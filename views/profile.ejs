@@ -1,22 +1,16 @@
-<div class="page-header">
+<div class="page-header text-center">
     <h1><%= user.local.name %></h1>
     <a href="/user/<%= user._id %>" class="btn btn-default btn-sm">Edit</a>
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     <a href="/user/<%= user._id %>/delete" class="btn btn-danger btn-sm">Delete</a>
-
 </div>
-
-
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
     <div class="well">
-      <h3>Locally Stored User</h3>
+      <h3>Profile</h3>
         <p>
           <strong>Name</strong>: <%= user.local.name %><br>
-          <strong>Id</strong>: <%= user._id %><br>
           <strong>Email</strong>: <%= user.local.email %><br>
-          <strong>Password</strong>: <%= user.local.password %>
-
         </p>
     </div>
   </div>

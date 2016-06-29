@@ -4,7 +4,7 @@
     <ul class="nav navbar-nav navbar-right">
       <% if (!user) { %>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b id='navbar-button'>Login</b> <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b class='navbar-button'>Login</b> <span class="caret"></span></a>
           <ul id="login-dp" class="dropdown-menu">
             <li>
               <div class="row">
@@ -28,9 +28,9 @@
           </ul>
         </li>
         <% } else { %>
-          <li><a href='/main'>Add a meal</a></li>
-          <li><a href='/profile'>Profile</a></li>
-          <li><a href='/logout'>Logout</a></li>
+          <li><a href='/main' style='color:#e9be56'>Add a meal</a></li>
+          <li><a href='/profile' style='color:#e9be56'><%= user.local.name %></a></li>
+          <li><a href='/logout' style='color:#e9be56'>Logout</a></li>
           <% } %>
         </ul>
       </div>
