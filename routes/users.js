@@ -99,6 +99,13 @@ userRouter.route('/user/:id/food')
       })
      })
   })
+  .get(function(req, res){
+    User.findById(req.params.id, function(err, user) {
+      if (err) return console.log(err);
+      // console.log(user.food);
+      res.json(user)
+    })
+  })
 
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()) return next()
