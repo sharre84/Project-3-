@@ -2,10 +2,14 @@
 <div class="jumbotron">
   <h1>Welcome to NutriKing!</h1>
   <p>Keeping track of what you eat one meal at a time.</p>
-  <p>
+
+  <form class="pure-form" id="new-search" action="/" method="post">
+    <input type="text" id="new-food" name="content" placeholder="Search" required>
+    <button class='pure-button' type="submit" id="add-food">Submit</button>
+  </form>
+<br>
     <a class="btn btn-primary btn-lg" href="/login" role="button">Login</a>
     <a class="btn btn-success btn-lg" href="/signup" role="button">Create a new account</a>
-  </p>
 </div>
 
 <style media="screen">
