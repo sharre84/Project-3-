@@ -14,6 +14,7 @@ var
   session = require('express-session'), // used to create cookies
   passport = require('passport'), // used for authentication
   passportConfig = require('./config/passport.js'),
+  nodemailer = require('nodemailer'),
   nutritionix = require('nutritionix')({
       appId: "027e373f",
       appKey: "4d32fcc05f9358d893602b98daa6a6f7"
