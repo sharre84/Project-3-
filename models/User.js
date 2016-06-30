@@ -19,6 +19,12 @@ var
       email: String,
       password: String
     },
+    google: {
+      id: String,
+      token: String,
+      email: String,
+      name: String
+    }
     food: [foodSchema]
   })
 
