@@ -25,7 +25,7 @@ var
   userRoutes = require('./routes/users.js')
 
 // connect to mongodb database
-mongoose.connect('mongodb://localhost/project-3', function(err){
+mongoose.connect(process.env.DB_URL, function(err){
   if (err) return console.log(err);
   console.log("Connected to MongoDB (project-3)");
 })

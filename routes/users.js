@@ -30,7 +30,9 @@ userRouter.route('/signup')
 // })
 
 userRouter.get('/profile', isLoggedIn, function(req, res){
-    res.render('profile', {user: req.user})
+  console.log("Inside of profile");
+  console.log(req.query);
+    res.render('profile', {user: req.user, strategy: req.query.strategy})
 })
 
 userRouter.get('/user/:id', function(req, res){
@@ -124,7 +126,7 @@ userRouter.get('/auth/google', passport.authenticate('google', {scope: ['profile
 
 userRouter.get('/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/profile',
+    successRedirect: '/profile?strategy=google',
     failureRedirect: '/fail'
   }));
 
