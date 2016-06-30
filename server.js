@@ -16,6 +16,7 @@ var
   passportConfig = require('./config/passport.js'),
   nodemailer = require('nodemailer'),
   methodOverride = require('method-override'),
+  moment = require('moment'),
   nutritionix = require('nutritionix')({
       appId: "027e373f",
       appKey: "4d32fcc05f9358d893602b98daa6a6f7"

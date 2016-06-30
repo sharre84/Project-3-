@@ -10,7 +10,8 @@ var
     calories: Number,
     protein: Number,
     fat: Number,
-    carbohydrates: Number
+    carbohydrates: Number,
+    created_at: Date
   })
 
   userSchema = new Schema({
@@ -27,6 +28,8 @@ var
     }
     food: [foodSchema]
   })
+
+
 
 userSchema.methods.generateHash = function(password){
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8))
