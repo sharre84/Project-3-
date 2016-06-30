@@ -5,12 +5,6 @@ var
   userRouter = express.Router(),
   date = new Date
 
-// autocomplete
-// userRouter.get('/search-member' function(req, res){
-//   var regex = new RegExp(req.query['term'], 'i');
-//   var query = User.
-// })
-
 
 userRouter.route('/login')
   .get(function(req, res){
@@ -18,7 +12,7 @@ userRouter.route('/login')
     //simply render the login view
   })
   .post(passport.authenticate('local-login',{
-    successRedirect: '/profile',
+    successRedirect: '/main',
     failureRedirect: '/login'
   }))
 
@@ -28,7 +22,7 @@ userRouter.route('/signup')
     res.render('signup', {flash: req.flash('signupMessage')})
   })
   .post(passport.authenticate('local-signup',{
-    successRedirect: '/profile',
+    successRedirect: '/main',
     failureRedirect: '/signup'
   }))
 
@@ -133,7 +127,7 @@ userRouter.get('/auth/google', passport.authenticate('google', {scope: ['profile
 
 userRouter.get('/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/profile?strategy=google',
+    successRedirect: '/main?strategy=google',
     failureRedirect: '/fail'
   }));
 
