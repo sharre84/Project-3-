@@ -18,8 +18,8 @@ var
   methodOverride = require('method-override'),
   moment = require('moment'),
   nutritionix = require('nutritionix')({
-      appId: "027e373f",
-      appKey: "4d32fcc05f9358d893602b98daa6a6f7"
+      appId: process.env.APPID,
+      appKey: process.env.APPKEY
   }, false),
   PORT = process.env.PORT || 3000, // heroku doesn't like port 3000 so this ensures heroku will pick its own port or use 3000
   userRoutes = require('./routes/users.js')

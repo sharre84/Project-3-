@@ -23,7 +23,7 @@
     </div>
   </div>
 <div class="container">
-  <table id="log-table" class="table table-hover table-responsive">
+  <table style="display: none" id="log-table" class="table table-hover table-responsive">
     <thead class="table-header">
       <tr class="row-borders">
         <th width="22%">Brand</th>
@@ -53,12 +53,17 @@
     console.log(data.food);
     var foodArr = data.food
     for (var i = 0; i < data.food.length; i++) {
-      // if (foodArr[i].created_at )
-      // console.log(data.food[data.food.length - 1].created_at);
-      logTableBody.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
-      foodArr[i].servingSize + ' ' + foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
-      foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
-      foodArr[i].carbohydrates + '</td></tr>')
+      if (data.food.length < 1) {
+        $('#log-table').hide()
+      } else {
+        $('#log-table').show()
+        // if (foodArr[i].created_at )
+        // console.log(data.food[data.food.length - 1].created_at);
+        logTableBody.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
+        foodArr[i].servingSize + ' ' + foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
+        foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
+        foodArr[i].carbohydrates + '</td></tr>')
+      }
     }
   })
 
