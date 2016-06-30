@@ -1,10 +1,42 @@
 var
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
+  GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
   //constructor function must be capitalized
   //and it's equivalent to a class
   User = require('../models/User.js')
   //two dots because you have to go out of config and then go into models
+
+passport.use(new GoogleStrategy({
+  clientID: "1088452267193-8q2n0ncihpebaon4hidr7v5cl9ctpvsm.apps.googleusercontent.com",
+  clientSecret: "QEf5N-MgbZc9vCjdkMfB1Kh8",
+  callbackURL: "http://localhost:3000/main"
+},
+  function(token, tokenSecret, profile, done){
+    process.nextTick(function(){
+      User.findOrCreate({ googleId: profile.id}, function (err, user) {
+        if (err)
+          return done(err, user);
+
+        if (user) {
+          return done(null, user);
+        }
+        else {
+          var newUser = new User();
+          newUser.google.id = profile.id;
+          newUser.google.token = token;
+          newUser.google.name = profile.displayName;
+          newUser.google.email = profile.emails[0].value;
+          newUser.save(function(err) {
+            if (err)
+              throw err;
+            return done(null,newUser);
+          });
+        }
+    });
+  });
+}));
+
 
 passport.serializeUser(function(user, done){
   //create cookie
