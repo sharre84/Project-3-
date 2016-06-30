@@ -9,6 +9,8 @@
     </form>
 </div>
 
+
+
 <br><br><br><br>
 
 <div class="container">
@@ -109,7 +111,6 @@ var lunchTable = $('#lunch-table')
 var dinnerTable = $('#dinner-table')
 var snacksTable = $('#snack-table')
 
-
 submit.on('click', function(evt){
   evt.preventDefault();
 })
@@ -151,6 +152,46 @@ submit.on('click', function(text){
     })
   }
 })
+
+
+
+
+// // autocomplete
+// // $('#autocomplete').keyup(function(){
+//   $('#autocomplete').autocomplete({
+//     source: function(request, response) {
+//       $.ajax({
+//         url: '/autocomplete',
+//         method: 'GET',
+//         dataType: 'json',
+//         data: request.body,
+//         json: true,
+//         contentType: 'application/json',
+//         success: function(data){
+//           response($.map($.parseJSON(data.d), function(item){
+//             var AC = new Object();
+//             AC.label = item.Field0;
+//             AC.value = item.Field1;
+//             return AC
+//           }));
+//         }
+//       });
+//     },
+// minLength: 3,
+// focus: function(event, ui){
+//   this.value = ui.item.label;
+//   event.preventDefault();
+// },
+// select: function(event, ui){
+//   this.value = ui.item.label;
+//   $('#search-result').val(ui.item.value);
+//   // event.preventDefault();
+//   // $('#quicksearch').submit();
+//     }
+//   });
+// // })
+
+
 
 
 $('body').on("click", ".breakfast", function(e){
