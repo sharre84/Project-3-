@@ -1,5 +1,7 @@
 var
   mongoose = require('mongoose'),
+  findOrCreate = require('mongoose-findorcreate')
+
   bcrypt = require('bcrypt-nodejs'),
   Schema = mongoose.Schema,
   foodSchema = new Schema ({
@@ -28,7 +30,7 @@ var
     },
     food: [foodSchema]
   })
-
+userSchema.plugin(findOrCreate)
 foodSchema.pre('save', function(next){
   var current_date = new Date
   this.created_at = current_date
