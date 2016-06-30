@@ -23,7 +23,11 @@ var
     food: [foodSchema]
   })
 
-
+foodSchema.pre('save', function(next){
+  var current_date = new Date
+  this.created_at = current_date
+  next()
+})
 
 userSchema.methods.generateHash = function(password){
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8))

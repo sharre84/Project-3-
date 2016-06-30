@@ -300,6 +300,7 @@ $.ajax({
 .done(function(data){
   var foodArr = data.food
   for (var i = 0; i < data.food.length; i++) {
+    // console.log(data.food[data.food.length - 1].created_at);
     $('#' + data.food[i].meal + '-tbody').append('<tr id="' + data.food[i]._id + '"><td><button class="delete btn btn-danger">Remove</button></td><td>' + foodArr[i].brand + '</td><td>' +
     foodArr[i].servingSize + ' ' + foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
     foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
