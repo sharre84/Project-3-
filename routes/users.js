@@ -2,7 +2,8 @@ var
   express = require('express'),
   passport = require('passport'),
   User = require('../models/User.js'),
-  userRouter = express.Router()
+  userRouter = express.Router(),
+  date = new Date
 
 userRouter.route('/login')
   .get(function(req, res){
@@ -78,7 +79,7 @@ userRouter.get('/logout', function(req, res) {
 })
 
 userRouter.get('/main', isLoggedIn, function(req, res){
-  res.render('main_page.ejs', {user: req.user})
+  res.render('main_page.ejs', {user: req.user, date: date})
 })
 
 userRouter.route('/user/:id/food')
