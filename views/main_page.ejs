@@ -1,125 +1,135 @@
-<script src="./js/moment.js" type="text/javascript"></script>
+<script src="/js/moment.js" type="text/javascript"></script>
 
 
 <div class="container text-center">
-    <h1>Search Food:</h1>
-    <form class="form-horizontal right-inner-addon" id="new-search" action="/" method="post">
-        <i class="icon-search"><span class="glyphicon glyphicon-search"></span></i>
-        <input  class="form-control input-lg" type="text" id="new-food" name="content" placeholder="Search" required>
-        <button class='hidden' type="submit" id="add-food">Submit</button>
-    </form>
+  <h1>Search Food:</h1>
+  <form class="form-horizontal right-inner-addon" id="new-search" action="/" method="post">
+    <i class="icon-search"><span class="glyphicon glyphicon-search"></span></i>
+    <input  class="form-control input-lg" type="text" id="new-food" name="content" placeholder="Search" required>
+    <button class='hidden' type="submit" id="add-food">Submit</button>
+  </form>
 </div>
 
 
-<br><br><br><br>
+<br><br>
 
+<h3 class="text-center" id="date"></h3>
 <div class="container">
-<div class="result-table-div">
+  <div class="result-table-div">
 
+  </div>
 </div>
 
-<div id="popup"></div>
 
-<br><br><br><br><br><br>
+  <br><br><br>
 
+<div class="col-md-12">
+  <div class="col-md-6" style="float: left">
+    <table style="display:none" id="breakfast-table" class="table table-hover table-responsive">
+      <thead class="table-header">
+        <tr style="background-color: green"><th colspan="7">Breakfast</th></tr>
+        <tr class="row-borders">
+          <th width="10%"></th>
+          <th width="20%">Brand</th>
+          <th width="15%">Serving Size</th>
+          <th width="13%">Calories</th>
+          <th width="13%">Protein</th>
+          <th width="13%">Fat</th>
+          <th width="15%">Carbohydrates</th>
+        </tr>
+      </thead>
 
-<h3 class="text-center"><%= date %></h3>
+      <tbody id="breakfast-tbody">
 
-<table style="display:none" id="breakfast-table" class="table table-hover table-responsive">
-  <thead class="table-header">
-    <tr style="background-color: green"><th colspan="7">Breakfast</th></tr>
-    <tr class="row-borders">
-      <th width="10%"></th>
-      <th width="20%">Brand</th>
-      <th width="15%">Serving Size</th>
-      <th width="13%">Calories</th>
-      <th width="13%">Protein</th>
-      <th width="13%">Fat</th>
-      <th width="15%">Carbohydrates</th>
-    </tr>
-  </thead>
+      </tbody>
+    </table>
+  </div>
 
-  <tbody id="breakfast-tbody">
+  <div class="col-md-6" style="float: left">
+    <table style="display:none" id="lunch-table" class="table table-hover table-responsive">
+      <thead class="table-header">
+        <tr style="background-color: blue"><th colspan="7">Lunch</th></tr>
+        <tr class="row-borders">
+          <th width="10%"></th>
+          <th width="20%">Brand</th>
+          <th width="15%">Serving Size</th>
+          <th width="13%">Calories</th>
+          <th width="13%">Protein</th>
+          <th width="13%">Fat</th>
+          <th width="15%">Carbohydrates</th>
+        </tr>
+      </thead>
 
-  </tbody>
-</table>
+      <tbody id="lunch-tbody">
 
-<table style="display:none" id="lunch-table" class="table table-hover table-responsive">
-  <thead class="table-header">
-    <tr style="background-color: blue"><th colspan="7">Lunch</th></tr>
-    <tr class="row-borders">
-      <th width="10%"></th>
-      <th width="20%">Brand</th>
-      <th width="15%">Serving Size</th>
-      <th width="13%">Calories</th>
-      <th width="13%">Protein</th>
-      <th width="13%">Fat</th>
-      <th width="15%">Carbohydrates</th>
-    </tr>
-  </thead>
+      </tbody>
+    </table>
+  </div>
 
-  <tbody id="lunch-tbody">
+  <div class="col-md-6" style="float: left">
+    <table style="display:none" id="dinner-table" class="table table-hover table-responsive">
+      <thead class="table-header">
+        <tr style="background-color: Orange"><th colspan="7">Dinner</th></tr>
+        <tr class="row-borders">
+          <th width="10%"></th>
+          <th width="20%">Brand</th>
+          <th width="15%">Serving Size</th>
+          <th width="13%">Calories</th>
+          <th width="13%">Protein</th>
+          <th width="13%">Fat</th>
+          <th width="15%">Carbohydrates</th>
+        </tr>
+      </thead>
 
-  </tbody>
-</table>
+      <tbody id="dinner-tbody">
 
-<table style="display:none" id="dinner-table" class="table table-hover table-responsive">
-  <thead class="table-header">
-    <tr style="background-color: Orange"><th colspan="7">Dinner</th></tr>
-    <tr class="row-borders">
-      <th width="10%"></th>
-      <th width="20%">Brand</th>
-      <th width="15%">Serving Size</th>
-      <th width="13%">Calories</th>
-      <th width="13%">Protein</th>
-      <th width="13%">Fat</th>
-      <th width="15%">Carbohydrates</th>
-    </tr>
-  </thead>
+      </tbody>
+    </table>
+  </div>
 
-  <tbody id="dinner-tbody">
+  <div class="col-md-6" style="float: left">
+    <table style="display:none" id="snack-table" class="table table-hover table-responsive">
+      <thead class="table-header">
+        <tr style="background-color: brown"><th colspan="7">Snacks</th></tr>
+        <tr class="row-borders">
+          <th width="10%"></th>
+          <th width="20%">Brand</th>
+          <th width="15%">Serving Size</th>
+          <th width="13%">Calories</th>
+          <th width="13%">Protein</th>
+          <th width="13%">Fat</th>
+          <th width="15%">Carbohydrates</th>
+        </tr>
+      </thead>
 
-  </tbody>
-</table>
+      <tbody id="snack-tbody">
 
-<table style="display:none" id="snack-table" class="table table-hover table-responsive">
-  <thead class="table-header">
-    <tr style="background-color: brown"><th colspan="7">Snacks</th></tr>
-    <tr class="row-borders">
-      <th width="10%"></th>
-      <th width="20%">Brand</th>
-      <th width="15%">Serving Size</th>
-      <th width="13%">Calories</th>
-      <th width="13%">Protein</th>
-      <th width="13%">Fat</th>
-      <th width="15%">Carbohydrates</th>
-    </tr>
-  </thead>
-
-  <tbody id="snack-tbody">
-
-  </tbody>
-</table>
-
+      </tbody>
+    </table>
+  </div>
 </div>
-</div>
+
 
 <script type="text/javascript">
+// var current_date = new Date
+var date = moment('<%= date %>').format('LL')
+$('#date').text(date)
+console.log(date);
 
 function showPopup(anchor, img_src) {
-		var popup = getPopup();
-		// add image
-		popup.innerHTML = "<img src=' + img_src + '/>";
+  var popup = getPopup();
+  // add image
+  popup.innerHTML = "<img src=' + img_src + '/>";
 
-		// position popup
-		popup.style.top = (anchor.offsetTop + anchor.offsetHeight + 5) + 'px';
-		popup.style.left = anchor.offsetLeft + 'px';
-		popup.style.display = 'block';
-	}
+  // position popup
+  popup.style.top = (anchor.offsetTop + anchor.offsetHeight + 5) + 'px';
+  popup.style.left = anchor.offsetLeft + 'px';
+  popup.style.display = 'block';
+}
 
 function hidePopup() {
-	var popup = getPopup();
-	popup.style.display = 'none';
+  var popup = getPopup();
+  popup.style.display = 'none';
 }
 
 var resultsTableBody = $('#result-table #result-tbody')
@@ -377,29 +387,29 @@ $.ajax({
 })
 
 $('body').on('click', '.delete', function(){
- var btn = $(this)
- var itemId = btn.parent().parent().attr('id')
- $.ajax({
-   url: '/user/<%= user._id %>/food/' + itemId,
-   method: 'DELETE'
- })
-   .done(function(data){
+  var btn = $(this)
+  var itemId = btn.parent().parent().attr('id')
+  $.ajax({
+    url: '/user/<%= user._id %>/food/' + itemId,
+    method: 'DELETE'
+  })
+  .done(function(data){
     btn.parent().parent().slideUp(function(){
-    btn.parent().parent().remove();
-    if (breakfastTable.children().children().length < 3) {
+      btn.parent().parent().remove();
+      if (breakfastTable.children().children().length < 3) {
         breakfastTable.hide()
       }
-    if (lunchTable.children().children().length < 3) {
+      if (lunchTable.children().children().length < 3) {
         lunchTable.hide()
       }
-    if (dinnerTable.children().children().length < 3) {
+      if (dinnerTable.children().children().length < 3) {
         dinnerTable.hide()
       }
-    if (snacksTable.children().children().length < 3) {
+      if (snacksTable.children().children().length < 3) {
         snacksTable.hide()
       }
     })
-   })
+  })
 })
 
 

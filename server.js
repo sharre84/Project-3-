@@ -17,6 +17,7 @@ var
   nodemailer = require('nodemailer'),
   methodOverride = require('method-override'),
   moment = require('moment'),
+  // googleButton = require('bootstrap-social'),
   nutritionix = require('nutritionix')({
       appId: process.env.APPID,
       appKey: process.env.APPKEY
@@ -32,6 +33,7 @@ mongoose.connect(process.env.DB_URL, function(err){
 
 
 // middleware
+// app.use(googleButton)
 app.use(bodyParser.json());
 app.use(express.static('./public'))
 app.use(logger('dev'))
