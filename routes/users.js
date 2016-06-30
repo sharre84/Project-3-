@@ -5,6 +5,13 @@ var
   userRouter = express.Router(),
   date = new Date
 
+// autocomplete
+// userRouter.get('/search-member' function(req, res){
+//   var regex = new RegExp(req.query['term'], 'i');
+//   var query = User.
+// })
+
+
 userRouter.route('/login')
   .get(function(req, res){
     res.render('login', {flash: req.flash('loginMessage')})

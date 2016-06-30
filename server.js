@@ -67,6 +67,40 @@ app.use(function(req, res, next) {
 })
 
 
+///////////////////////////////////////////
+// app.post('/autocomplete', function(req, res) {
+//  var body = {
+//                appId:"027e373f",
+//                appKey:"4d32fcc05f9358d893602b98daa6a6f7",
+//                query: req.body.query,
+//                results: 5,
+//                fields:["item_name","brand_name","nf_serving_size_qty", "nf_serving_size_unit", "nf_calories", "nf_protein", "nf_total_fat", "nf_total_carbohydrate", "images_front_full_url"],
+//                sort:{
+//                  field:"_score",
+//                  order:"desc"
+//                },
+//                filters:{
+//                  item_type:2
+//                }
+//              }
+//
+//  request({
+//    method: 'POST',
+//    json: true,
+//    url: "https://api.nutritionix.com/v1_1/search/",
+//    body: body
+//  }, function(err, response, body){
+//    if (err) return console.log(err);
+//    var suggestions = []
+//    body.hits.forEach(function(hit){
+//      suggestions.push({item_name: hit.fields.item_name, brand: hit.fields.brand_name})
+//    })
+//    res.json(suggestions)
+//  })
+// })
+/////////////////////////////////////////
+
+
 
 app.post('/', function(req, res) {
   var body = {
