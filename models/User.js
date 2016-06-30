@@ -25,11 +25,9 @@ var
       token: String,
       email: String,
       name: String
-    }
+    },
     food: [foodSchema]
   })
-
-
 
 userSchema.methods.generateHash = function(password){
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8))

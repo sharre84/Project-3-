@@ -10,7 +10,7 @@ var
 passport.use(new GoogleStrategy({
   clientID: "1088452267193-8q2n0ncihpebaon4hidr7v5cl9ctpvsm.apps.googleusercontent.com",
   clientSecret: "QEf5N-MgbZc9vCjdkMfB1Kh8",
-  callbackURL: "http://localhost:3000/profile"
+  callbackURL: "http://localhost:3000/main"
 },
   function(token, tokenSecret, profile, done){
     process.nextTick(function(){

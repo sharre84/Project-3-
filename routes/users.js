@@ -120,6 +120,14 @@ userRouter.route('/user/:id/food/:foodId')
     })
   })
 
+userRouter.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}))
+
+userRouter.get('/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/profile',
+    failureRedirect: '/fail'
+  }));
+
 
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()) return next()
