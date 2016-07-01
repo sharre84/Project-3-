@@ -47,6 +47,7 @@
 var allDates = _.groupBy()
 
   var logTableBody = $('#log-table #log-tbody')
+  var logTableDiv = $('.container')
 
   $.ajax({
     url: '/user/<%= user._id %>/food',
@@ -60,25 +61,27 @@ var allDates = _.groupBy()
       var created_at = new Date(meal.created_at)
       return created_at.getDate();
     });
-    for (var i in foodsByDate) {
-      console.log(foodsByDate[i]);
-      if ()
-      // foodsByDate[i].forEach(function(console.log('hello');))
-    }
-    for (var i = 0; i < data.food.length; i++) {
-      if (data.food.length < 1) {
-        $('#log-table').hide()
-      } else {
-        $('#log-table').show()
-        // if (foodArr[i].created_at )
-        // console.log(data.food[data.food.length - 1].created_at);
-        logTableBody.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
-        foodArr[i].servingSize + ' ' + foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
-        foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
-        foodArr[i].carbohydrates + '</td></tr>')
-      }
-    }
-  })
+  //   for (var i in foodsByDate) {
+  //     logTableDiv.append('<table class="table table-hover table-responsive"><thead class="table-header"><tr class="row-borders"><th width="10%"></th><th width="20%">Brand</th><th width="15%">Serving Size</th><th width="13%">Calories</th><th width="13%">Protein</th><th width="13%">Fat</th><th width="15%">Carbohydrates</th></tr></thead><tbody id="result-tbody">')
+  //     console.log(foodsByDate[i]);
+  //     if ()
+  //     // foodsByDate[i].forEach(function(console.log('hello');))
+  //   }
+  //   for (var i = 0; i < data.food.length; i++) {
+  //     if (data.food.length < 1) {
+  //       $('#log-table').hide()
+  //     } else {
+  //       $('#log-table').show()
+  //       // if (foodArr[i].created_at )
+  //       // console.log(data.food[data.food.length - 1].created_at);
+  //       logTableDiv.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
+  //       foodArr[i].servingSize + ' ' + foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
+  //       foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
+  //       foodArr[i].carbohydrates + '</td></tr></tbody></table>')
+  //     }
+  //   }
+  // })
+
 
 </script>
 
