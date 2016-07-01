@@ -12,6 +12,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js" charset="utf-8"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
   <style>
+  .navbar-inverse {
+    background-color: rgba(34,34,34,.85);
+  }
   .navbar-brand {
     height: 50px;
     width: 60px;
@@ -23,15 +26,23 @@
   }
 
   .front-page {
-    height: 400px;
-    width: 500px;
+    height: 105%;
+    width: 100%;
     margin-top: -20px;
+    opacity: 0.5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
   }
 
   .jumbotron {
-    background: #222;
+    background: rgba(34, 34, 34, 0.85);
     color: #e9be56;
     text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: -40px;
   }
 
   .btn {
@@ -45,10 +56,6 @@
   .well {
     background: #222;
     color: #e9be56;
-  }
-
-  body {
-    background: #fefefe;
   }
 
   .table-header {
