@@ -10,7 +10,7 @@ NutriKing is a health oriented site where the user can log and track their meals
 
 ### Installation
 
-No installation required, click [here](https://mighty-inlet-45127.herokuapp.com/) to acccess the site and get started!
+No installation required, click [here](https://honest-eds-21969.herokuapp.com) to acccess the site and get started!
 
 ### Project Requirements
 
