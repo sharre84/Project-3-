@@ -117,9 +117,6 @@ userRouter.route('/user/:id/food/:foodId')
         })
         res.json({message: 'deleted item successfully', user: user})
       }
-      // console.log(user._id);
-      // console.log(user.food.id);
-      // console.log(req.params.foodId);
     })
   })
 

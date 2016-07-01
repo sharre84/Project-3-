@@ -43,6 +43,9 @@
 
 <script type="text/javascript">
 
+
+var allDates = _.groupBy()
+
   var logTableBody = $('#log-table #log-tbody')
 
   $.ajax({
@@ -50,8 +53,14 @@
     method: 'GET',
   })
   .done(function(data){
-    console.log(data.food);
+    // console.log(data);
     var foodArr = data.food
+    // var allDates = _.groupBy(foodArr, 'created_at')
+    var foodsByDate = _.groupBy(foodArr, function(meal) {
+      var created_at = new Date(meal.created_at)
+      return created_at.getDate();
+    });
+    console.log(foodsByDate);
     for (var i = 0; i < data.food.length; i++) {
       if (data.food.length < 1) {
         $('#log-table').hide()
