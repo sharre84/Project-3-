@@ -1,5 +1,4 @@
 # WDI Project 3: NutriKing
-<hr>
 
 NutriKing was created by Lawrence Gomez, Shahrooz Hedayati and Hines Kao as their third project for General Assembly's WDI course in Santa Monica.
 
@@ -26,7 +25,7 @@ The guidelines listed below were provided by the project markdown:
 
 Necessary Deliverables
 
-* A pitch deck, delivered as a team to the instructors
+* A [pitch deck](Pitch_Deck.pptx), delivered as a team to the instructors
 * A working app, built by the whole team, hosted somewhere on the Internet
 * A client application that consumes our own API, hosted somewhere on the internet
 * A link to our hosted, working app in the URL section of our Github repo
@@ -39,6 +38,8 @@ Necessary Deliverables
 * A working login page that includes both local and OAuth login options
 * A working create account feature that allows users to create a NutriKing account
 * The ability for users to create, edit, and delete a profile
+* The ability for users to create, edit and delete meals
+* The ability for users to be able to view logs from previous meals added
 
 
 
@@ -52,13 +53,24 @@ Necessary Deliverables
 * Node.js
 * Express.js
 * MongoDB.js
+* [Trello Board](https://trello.com/b/3qa7Cvoq/project-3)
 
 ![](./public/images/1.png)
 
 ![](./public/images/2.png)
 
+
 ### Approach taken
+
+1. We started by drawing out our Wireframes to a diagram and to plan our project.
+2. After that, we made a planning board and wrote user stories using Trello.
+3. We created models, views, and controllers for our app. We achieved full CRUD using RESTful routing.
+4. Lastly, after all the debugging, we deployed the project to Heroku.
 
 
 ### Future Implementations
 
+* The ability to create a meal plan for weight loss
+* The ability to have autocomplete function for the search bar
+* The ability for users being able to upload a before and after picture
+* The ability to have the meal history of the user to be displayed in a calendar
