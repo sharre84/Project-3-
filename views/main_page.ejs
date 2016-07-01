@@ -33,7 +33,7 @@
         <tr class="row-borders">
           <th width="10%"></th>
           <th width="20%">Brand</th>
-          <th width="15%">Serving Size</th>
+          <th width="15%">Servings Consumed</th>
           <th width="13%">Calories</th>
           <th width="13%">Protein</th>
           <th width="13%">Fat</th>
@@ -54,7 +54,7 @@
         <tr class="row-borders">
           <th width="10%"></th>
           <th width="20%">Brand</th>
-          <th width="15%">Serving Size</th>
+          <th width="15%">Servings Consumed</th>
           <th width="13%">Calories</th>
           <th width="13%">Protein</th>
           <th width="13%">Fat</th>
@@ -75,7 +75,7 @@
         <tr class="row-borders">
           <th width="10%"></th>
           <th width="20%">Brand</th>
-          <th width="15%">Serving Size</th>
+          <th width="15%">Servings Consumed</th>
           <th width="13%">Calories</th>
           <th width="13%">Protein</th>
           <th width="13%">Fat</th>
@@ -96,7 +96,7 @@
         <tr class="row-borders">
           <th width="10%"></th>
           <th width="20%">Brand</th>
-          <th width="15%">Serving Size</th>
+          <th width="15%">Servings Consumed</th>
           <th width="13%">Calories</th>
           <th width="13%">Protein</th>
           <th width="13%">Fat</th>
@@ -177,10 +177,10 @@ submit.on('click', function(text){
     }).done(function(data){
       resultTableDiv.empty()
       console.log(data);
-      resultTableDiv.append('<table id="result-table" class="table table-hover table-responsive"><thead class="table-header"><tr class="row-borders"><th width="10%"></th><th width="20%">Brand</th><th width="15%">Serving Size</th><th width="13%">Calories</th><th width="13%">Protein</th><th width="13%">Fat</th><th width="15%">Carbohydrates</th></tr></thead><tbody id="result-tbody"></tbody></table>')
+      resultTableDiv.append('<table id="result-table" class="table table-hover table-responsive"><thead class="table-header"><tr class="row-borders"><th width="10%"></th><th width="10%"></th><th width="20%">Brand</th><th width="15%">Serving Size</th><th width="13%">Calories</th><th width="13%">Protein</th><th width="13%">Fat</th><th width="15%">Carbohydrates</th></tr></thead><tbody id="result-tbody"></tbody></table>')
       var resultTableBody = $('#result-table #result-tbody')
       for (var i = 0; i < data.hits.length; i ++){
-        resultTableBody.append('<tr id="' + data.hits[i]._id + '"><td><div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add Food<span class="caret"></span></button><ul class="dropdown-menu"><li><a href="#" class="breakfast">Breakfast</a></li><li><a class="lunch" href="#">Lunch</a></li><li><a class="dinner" href="#">Dinner</a></li><li><a class="snack" href="#">Snack</a></li></ul></div></td><td>' +
+        resultTableBody.append('<tr id="' + data.hits[i]._id + '"><td><div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add Food<span class="caret"></span></button><ul class="dropdown-menu"><li><a href="#" class="breakfast">Breakfast</a></li><li><a class="lunch" href="#">Lunch</a></li><li><a class="dinner" href="#">Dinner</a></li><li><a class="snack" href="#">Snack</a></li></ul></div></td><td><input id="servings" type="text"></td><td>' +
         data.hits[i].fields.brand_name + '</td><td>' + data.hits[i].fields.nf_serving_size_qty + ' ' + data.hits[i].fields.nf_serving_size_unit + '</td><td>' + data.hits[i].fields.nf_calories + '</td><td>' +
         data.hits[i].fields.nf_protein + '</td><td>' + data.hits[i].fields.nf_total_fat + '</td><td>' +
         data.hits[i].fields.nf_total_carbohydrate + '</td></tr>')
@@ -229,23 +229,24 @@ submit.on('click', function(text){
 
 
 
-
 $('body').on("click", ".breakfast", function(e){
   e.preventDefault()
-  console.log("hello")
+  var servings = $('#servings').val()
   btn = $(this)
   itemId = btn.parent().parent().attr('id')
   fields = btn.parent().parent().parent().parent().siblings();
-  servingData = fields[1].innerText.split(' ');
+  console.log(fields);
+  servingData = fields[2].innerText.split(' ');
   var data = {};
   data.meal = "breakfast"
-  data.brand = fields[0].innerText
-  data.servingSize = servingData[0]
+  data.brand = fields[1].innerText
+  data.servingSize = Number(servingData[0]) * servings
   data.servingSizeUnits = servingData[1]
-  data.calories = fields[2].innerText
-  data.protein = fields[3].innerText
-  data.fat = fields[4].innerText
-  data.carbohydrates = fields[5].innerText
+  data.calories = Number(fields[3].innerText) * servings
+  data.protein = Number(fields[4].innerText) * servings
+  data.fat = Number(fields[5].innerText) * servings
+  data.carbohydrates = Number(fields[6].innerText) * servings
+
   $.ajax({
     url: '/user/<%= user._id %>/food',
     method: 'POST',
