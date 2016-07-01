@@ -60,7 +60,11 @@ var allDates = _.groupBy()
       var created_at = new Date(meal.created_at)
       return created_at.getDate();
     });
-    console.log(foodsByDate);
+    for (var i in foodsByDate) {
+      console.log(foodsByDate[i]);
+      if ()
+      // foodsByDate[i].forEach(function(console.log('hello');))
+    }
     for (var i = 0; i < data.food.length; i++) {
       if (data.food.length < 1) {
         $('#log-table').hide()
