@@ -2,7 +2,7 @@
     <h1><%= user.local.name %></h1>
     <a href="/user/<%= user._id %>" class="btn btn-default btn-sm">Edit</a>
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    <a href="/user/<%= user._id %>/delete" class="btn btn-danger btn-sm">Delete</a>
+    <a href="/user/<%= user._id %>/delete" id="delete-account" class="btn btn-danger btn-sm">Delete Your Account</a>
 </div>
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
@@ -41,10 +41,20 @@
   </table>
 </div>
 
+<!-- Temp "Table" Container  -->
+<div class="container">
+  <div id="tempContainer"></div>
+</div>
+
+
 <script type="text/javascript">
 
+  $('#delete-account').on('click', function(e){
 
-var allDates = _.groupBy()
+    if (! confirm("Are you sure you want to permanently delete your account?!")) {
+      e.preventDefault()
+    }
+  })
 
   var logTableBody = $('#log-table #log-tbody')
   var logTableDiv = $('.container')
@@ -54,33 +64,52 @@ var allDates = _.groupBy()
     method: 'GET',
   })
   .done(function(data){
-    // console.log(data);
     var foodArr = data.food
-    // var allDates = _.groupBy(foodArr, 'created_at')
     var foodsByDate = _.groupBy(foodArr, function(meal) {
       var created_at = new Date(meal.created_at)
       return created_at.getDate();
     });
-  //   for (var i in foodsByDate) {
-  //     logTableDiv.append('<table class="table table-hover table-responsive"><thead class="table-header"><tr class="row-borders"><th width="10%"></th><th width="20%">Brand</th><th width="15%">Serving Size</th><th width="13%">Calories</th><th width="13%">Protein</th><th width="13%">Fat</th><th width="15%">Carbohydrates</th></tr></thead><tbody id="result-tbody">')
-  //     console.log(foodsByDate[i]);
-  //     if ()
-  //     // foodsByDate[i].forEach(function(console.log('hello');))
-  //   }
-  //   for (var i = 0; i < data.food.length; i++) {
-  //     if (data.food.length < 1) {
-  //       $('#log-table').hide()
-  //     } else {
-  //       $('#log-table').show()
-  //       // if (foodArr[i].created_at )
-  //       // console.log(data.food[data.food.length - 1].created_at);
-  //       logTableDiv.append('<tr id="' + data.food[i]._id + '"><td>' + foodArr[i].brand + '</td><td>' +
-  //       foodArr[i].servingSize + ' ' + foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
-  //       foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
-  //       foodArr[i].carbohydrates + '</td></tr></tbody></table>')
-  //     }
-  //   }
-  // })
+    for(date in foodsByDate) {
+      var myTable = $('<table>', {id: "result-table", class: "slideIt table table-hover table-responsive"})
+      var myTHead = $('<thead>', {class: "table-header"})
+      var dateCaption = $('<caption>', {class: "dateForTable text-center"})
+
+      dateCaption.text(moment(foodsByDate[date][0].created_at).format("LL"))
+      dateCaption.on('click', function(){
+        $(this).siblings().slideToggle();
+      })
+      var dataRow = $('<tr>', {class: "row-borders"})
+      var mealTh = $('<th>', {width: "20%", class: "table-header"}).text("Meal")
+      var brandTh = $('<th>', {width: "15%", class: "table-header"}).text("Brand")
+      var proteinTh = $('<th>', {width: "13%", class: "table-header"}).text("Protein")
+      var fatTh = $('<th>', {width: "13%", class: "table-header"}).text("Fat")
+      var carbTh = $('<th>', {width: "13%", class: "table-header"}).text("Carbohydrates")
+      var caloriesTh = $('<th>', {width: "15%", class: "table-header"}).text("Calories")
+
+      myTable.append(myTHead);
+      myTable.append(dateCaption);
+      myTable.append(dataRow);
+      dataRow.append(mealTh);
+      dataRow.append(brandTh);
+      dataRow.append(proteinTh);
+      dataRow.append(fatTh);
+      dataRow.append(carbTh);
+      dataRow.append(caloriesTh);
+
+      $('#tempContainer').append(myTable)
+
+      foodsByDate[date].forEach(function(meal) {
+        $('#tempContainer tbody').append('<tr id="' + meal._id + '"><td>' +
+        meal.meal + '</td><td>' + meal.brand + '</td><td>' + meal.protein + '</td><td>' +
+        meal.fat + '</td><td>' + meal.carbohydrates + '</td><td>' +
+        meal.calories + '</td></tr>')
+      })
+
+
+
+    }
+    $('caption').siblings().hide()
+  })
 
 
 </script>

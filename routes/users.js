@@ -88,7 +88,10 @@ userRouter.get('/main', isLoggedIn, function(req, res){
 userRouter.route('/user/:id/food')
   .post(function(req, res){
     User.findById(req.params.id, function(err, user){
-      if (err) return console.log(err);
+      if (err) {
+        console.log("inside of post food");
+        return console.log(err)
+      };
       console.log(req.body.meal);
       user.food.push(req.body)
       user.save(function(err){

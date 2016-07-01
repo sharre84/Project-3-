@@ -16,6 +16,7 @@
 <br><br>
 
 <h3 class="text-center" id="date"></h3>
+<div class="text-center calories-consumed"></div>
 <div class="container">
   <div class="result-table-div">
 
@@ -23,7 +24,7 @@
 </div>
 
 
-  <br><br><br>
+<br><br><br>
 
 <div class="col-md-12">
   <div class="col-md-6" style="float: left">
@@ -138,7 +139,7 @@ var resultsTableBody = $('#result-table #result-tbody')
 var breakfastTableBody = $('#breakfast-table #breakfast-tbody')
 var lunchTableBody = $('#lunch-table #lunch-tbody')
 var dinnerTableBody = $('#dinner-table #dinner-tbody')
-var snackTableBody = $('#snack-table #snack-tbody')
+var snacksTableBody = $('#snack-table #snack-tbody')
 var submit = $('#add-food')
 var logTableBody = $('#log-table #log-tbody')
 var resultTableDiv = $('.result-table-div')
@@ -146,6 +147,8 @@ var breakfastTable = $('#breakfast-table')
 var lunchTable = $('#lunch-table')
 var dinnerTable = $('#dinner-table')
 var snacksTable = $('#snack-table')
+var totalCaloriesDiv = $('.calories-consumed');
+var totalCalories = 0;
 
 submit.on('click', function(evt){
   evt.preventDefault();
@@ -189,56 +192,14 @@ submit.on('click', function(text){
   }
 })
 
-
-
-
-// // autocomplete
-// // $('#autocomplete').keyup(function(){
-//   $('#autocomplete').autocomplete({
-//     source: function(request, response) {
-//       $.ajax({
-//         url: '/autocomplete',
-//         method: 'GET',
-//         dataType: 'json',
-//         data: request.body,
-//         json: true,
-//         contentType: 'application/json',
-//         success: function(data){
-//           response($.map($.parseJSON(data.d), function(item){
-//             var AC = new Object();
-//             AC.label = item.Field0;
-//             AC.value = item.Field1;
-//             return AC
-//           }));
-//         }
-//       });
-//     },
-// minLength: 3,
-// focus: function(event, ui){
-//   this.value = ui.item.label;
-//   event.preventDefault();
-// },
-// select: function(event, ui){
-//   this.value = ui.item.label;
-//   $('#search-result').val(ui.item.value);
-//   // event.preventDefault();
-//   // $('#quicksearch').submit();
-//     }
-//   });
-// // })
-
-
-
-$('body').on("click", ".breakfast", function(e){
-  e.preventDefault()
+function postFood(thisBtn, theMeal){
   var servings = $('#servings').val()
-  btn = $(this)
+  var btn = $(thisBtn)
   itemId = btn.parent().parent().attr('id')
   fields = btn.parent().parent().parent().parent().siblings();
-  console.log(fields);
   servingData = fields[2].innerText.split(' ');
   var data = {};
-  data.meal = "breakfast"
+  data.meal = theMeal
   data.brand = fields[1].innerText
   data.servingSize = Number(servingData[0]) * servings
   data.servingSizeUnits = servingData[1]
@@ -246,122 +207,46 @@ $('body').on("click", ".breakfast", function(e){
   data.protein = Number(fields[4].innerText) * servings
   data.fat = Number(fields[5].innerText) * servings
   data.carbohydrates = Number(fields[6].innerText) * servings
-
   $.ajax({
     url: '/user/<%= user._id %>/food',
     method: 'POST',
     contentType: 'application/json',
     data: JSON.stringify(data)
   }).done(function(data){
-    breakfastTable.show()
-    console.log(data.user);
+    window[theMeal + "Table"].show()
     foodArr = data.user.food
     var last = foodArr[data.user.food.length-1];
-    breakfastTableBody.append('<tr id="' + itemId + '"><td><button class="delete btn btn-danger">Remove</button></td><td>' + last.brand + '</td><td>' +
+    window[theMeal + "TableBody"].append('<tr id="' + itemId + '"><td><button class="delete btn btn-danger">Remove</button></td><td>' + last.brand + '</td><td>' +
     last.servingSize + ' ' + last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
     last.protein + '</td><td>' + last.fat + '</td><td>' +
     last.carbohydrates + '</td></tr>')
+    totalCalories += last.calories
+    $('#calories').html('Total Calories Consumed Today: ' + totalCalories)
   })
+}
+
+$('body').on("click", ".breakfast", function(e){
+  e.preventDefault()
+  var thisBtn = this;
+  postFood(thisBtn, 'breakfast')
 })
 
 $('body').on("click", ".lunch", function(e){
   e.preventDefault()
-  console.log("hello")
-  btn = $(this)
-  itemId = btn.parent().parent().attr('id')
-  fields = btn.parent().parent().parent().parent().siblings();
-  servingData = fields[1].innerText.split(' ');
-  console.log(fields)
-  var data = {};
-  data.meal = "lunch"
-  data.brand = fields[0].innerText
-  data.servingSize = servingData[0]
-  data.servingSizeUnits = servingData[1]
-  data.calories = fields[2].innerText
-  data.protein = fields[3].innerText
-  data.fat = fields[4].innerText
-  data.carbohydrates = fields[5].innerText
-  $.ajax({
-    url: '/user/<%= user._id %>/food',
-    method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(data)
-  }).done(function(data){
-    lunchTable.show()
-    console.log(data.user);
-    foodArr = data.user.food
-    var last = foodArr[data.user.food.length-1];
-    lunchTableBody.append('<tr id="' + itemId + '"><td><button class="delete btn btn-danger">Remove</button></td><td>' + last.brand + '</td><td>' +
-    last.servingSize + ' ' + last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
-    last.protein + '</td><td>' + last.fat + '</td><td>' +
-    last.carbohydrates + '</td></tr>')
-  })
+  var thisBtn = this;
+  postFood(thisBtn, 'lunch')
 })
 
 $('body').on("click", ".dinner", function(e){
   e.preventDefault()
-  console.log("hello")
-  btn = $(this)
-  itemId = btn.parent().parent().attr('id')
-  fields = btn.parent().parent().parent().parent().siblings();
-  servingData = fields[1].innerText.split(' ');
-  console.log(fields)
-  var data = {};
-  data.meal = "dinner"
-  data.brand = fields[0].innerText
-  data.servingSize = servingData[0]
-  data.servingSizeUnits = servingData[1]
-  data.calories = fields[2].innerText
-  data.protein = fields[3].innerText
-  data.fat = fields[4].innerText
-  data.carbohydrates = fields[5].innerText
-  $.ajax({
-    url: '/user/<%= user._id %>/food',
-    method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(data)
-  }).done(function(data){
-    dinnerTable.show()
-    console.log(data.user);
-    foodArr = data.user.food
-    var last = foodArr[data.user.food.length-1];
-    dinnerTableBody.append('<tr id="' + itemId + '"><td><button class="delete btn btn-danger">Remove</button></td><td>' + last.brand + '</td><td>' +
-    last.servingSize + ' ' + last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
-    last.protein + '</td><td>' + last.fat + '</td><td>' +
-    last.carbohydrates + '</td></tr>')
-  })
+  var thisBtn = this;
+  postFood(thisBtn, 'dinner')
 })
 
 $('body').on("click", ".snack", function(e){
   e.preventDefault()
-  btn = $(this)
-  itemId = btn.parent().parent().attr('id')
-  fields = btn.parent().parent().parent().parent().siblings();
-  servingData = fields[1].innerText.split(' ');
-  var data = {};
-  data.meal = "snack"
-  data.brand = fields[0].innerText
-  data.servingSize = servingData[0]
-  data.servingSizeUnits = servingData[1]
-  data.calories = fields[2].innerText
-  data.protein = fields[3].innerText
-  data.fat = fields[4].innerText
-  data.carbohydrates = fields[5].innerText
-  console.log(data);
-  $.ajax({
-    url: '/user/<%= user._id %>/food',
-    method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(data)
-  }).done(function(data){
-    snacksTable.show()
-    foodArr = data.user.food
-    var last = foodArr[data.user.food.length-1];
-    snackTableBody.append('<tr id="' + itemId + '"><td><button class="delete btn btn-danger">Remove</button></td><td>' + last.brand + '</td><td>' +
-    last.servingSize + ' ' + last.servingSizeUnits + '</td><td>' + last.calories + '</td><td>' +
-    last.protein + '</td><td>' + last.fat + '</td><td>' +
-    last.carbohydrates + '</td></tr>');
-  })
+  var thisBtn = this;
+  postFood(thisBtn, 'snacks')
 })
 
 $.ajax({
@@ -386,7 +271,10 @@ $.ajax({
     foodArr[i].servingSize + ' ' + foodArr[i].servingSizeUnits + '</td><td>' + foodArr[i].calories + '</td><td>' +
     foodArr[i].protein + '</td><td>' + foodArr[i].fat + '</td><td>' +
     foodArr[i].carbohydrates + '</td></tr>')
+    totalCalories += Number(data.food[i].calories)
+    console.log(totalCalories);
   }
+  appendCalories()
 })
 
 $('body').on('click', '.delete', function(){
@@ -415,10 +303,9 @@ $('body').on('click', '.delete', function(){
   })
 })
 
-
-// resultTable.append('<table id="results-table" class="table table-hover table-responsive"><thead class="table-header"><tr class="row-borders"><th width="10%"></th><th width="20%">Brand</th><th width="15%">Serving Size</th><th width="13%">Calories</th><th width="13%">Protein</th><th width="13%">Fat</th><th width="15%">Carbohydrates</th></tr></thead><tbody id="results-tbody"></tbody></table>')
-
-// resultTable.append('<table id="breakfast-table" class="table table-hover table-responsive"><thead class="table-header"><tr class="row-borders"><th width="10%"></th><th width="20%">Brand</th><th width="15%">Serving Size</th><th width="13%">Calories</th><th width="13%">Protein</th><th width="13%">Fat</th><th width="15%">Carbohydrates</th></tr></thead><tbody id="breakfast-tbody"><tr><td>hello</td><td>hello</td><td>hello</td><td>hello</td><td>hello</td><td>hello</td><td>hello</td></tr></tbody></table>')
+function appendCalories() {
+  totalCaloriesDiv.append('<h3 id="calories">Total Calories Consumed Today: ' + totalCalories + '</h3>')
+}
 
 
 </script>
