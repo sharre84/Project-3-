@@ -12,7 +12,6 @@
                   <li>
                     <form action="/login" method="post" id='navbar-login'>
                       <div class="form-group">
-
                         <input type="text" class="form-control" name="email" placeholder="Email">
                       </div>
                       <div class="form-group">
@@ -32,12 +31,12 @@
         <% } else { %>
           <li><a href='/main' style='color:#e9be56'>Add a meal</a></li>
           <% if (user.local.name ) { %>
-          <li><a href='/profile' style='color:#e9be56'><%= user.local.name %></a></li>
-          <% } else { %>
-          <li><a href='/profile' style='color:#e9be56'><%= user.google.name %></a></li>
-          <% } %>
-          <li><a href='/logout' style='color:#e9be56'>Logout</a></li>
-          <% } %>
-        </ul>
-      </div>
-    </nav>
+            <li><a href='/profile' style='color:#e9be56'><%= user.local.name %></a></li>
+            <% } else { %>
+              <li><a href='/profile' style='color:#e9be56'><%= user.google.name %></a></li>
+              <% } %>
+              <li><a href='/logout' style='color:#e9be56'>Logout</a></li>
+              <% } %>
+            </ul>
+          </div>
+        </nav>

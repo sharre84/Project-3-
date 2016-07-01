@@ -2,25 +2,23 @@
   <h1>Login</h1>
 
   <% if(flash.length > 0) { %>
-      <div class="alert alert-danger"><%= flash %></div>
+    <div class="alert alert-danger"><%= flash %></div>
     <% } %>
 
-  <form action="/login" method="post">
-    <div class="form-group">
+    <form action="/login" method="post">
+      <div class="form-group">
         <label>Email</label>
         <input type="text" class="form-control" name="email">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-control" name="password">
-    </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" name="password">
+      </div>
 
-    <button type="submit" class="btn btn-info btn-lg">Login</button>
-  </form>
+      <button type="submit" class="btn btn-info btn-lg">Login</button>
+    </form>
+    <hr>
+    <p>Or, <a href="/signup">Signup</a></p>
+    <p>Go back <a href="/">home</a>.</p>
 
-  <hr>
-
-  <p>Or, <a href="/signup">Signup</a></p>
-  <p>Go back <a href="/">home</a>.</p>
-
-</div>
+  </div>

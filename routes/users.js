@@ -1,39 +1,33 @@
 var
-  express = require('express'),
-  passport = require('passport'),
-  User = require('../models/User.js'),
-  userRouter = express.Router(),
-  date = new Date
-
+express = require('express'),
+passport = require('passport'),
+User = require('../models/User.js'),
+userRouter = express.Router(),
+date = new Date
 
 userRouter.route('/login')
-  .get(function(req, res){
-    res.render('login', {flash: req.flash('loginMessage')})
-    //simply render the login view
-  })
-  .post(passport.authenticate('local-login',{
-    successRedirect: '/main',
-    failureRedirect: '/login'
-  }))
-
+.get(function(req, res){
+  res.render('login', {flash: req.flash('loginMessage')})
+  //simply render the login view
+})
+.post(passport.authenticate('local-login',{
+  successRedirect: '/main',
+  failureRedirect: '/login'
+}))
 
 userRouter.route('/signup')
-  .get(function(req, res){
-    res.render('signup', {flash: req.flash('signupMessage')})
-  })
-  .post(passport.authenticate('local-signup',{
-    successRedirect: '/main',
-    failureRedirect: '/signup'
-  }))
-
-// userRouter.get('/profile', isLoggedIn, function(req,res) {
-//   res.render('profile', {user: req.user})
-// })
+.get(function(req, res){
+  res.render('signup', {flash: req.flash('signupMessage')})
+})
+.post(passport.authenticate('local-signup',{
+  successRedirect: '/main',
+  failureRedirect: '/signup'
+}))
 
 userRouter.get('/profile', isLoggedIn, function(req, res){
   console.log("Inside of profile");
   console.log(req.query);
-    res.render('profile', {user: req.user, strategy: req.query.strategy})
+  res.render('profile', {user: req.user, strategy: req.query.strategy})
 })
 
 userRouter.get('/user/:id', function(req, res){
@@ -47,24 +41,6 @@ userRouter.patch('/user/:id', function (req, res){
   User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, user){
     if(err) console.log(err)
     res.redirect('/profile')
-    // res.json({message: "User profile updated!", success: true, user: user})
-  //   var updateObject = req.body;
-  //   var setObject = {};
-  //
-  //
-  //   // this loops through the request object and only updates the selected keys that the user wants to update. (password changes wont work, yet)
-  //   for (key in req.body) {
-  //     if (key === 'id') continue;
-  //     setObject['local.' + key] = req.body[key]
-  //   }
-  //
-  //   var id = req.params.id;
-  //   console.log(id);
-  //   User.update({_id  : id}, {$set: setObject}, function(err, user){
-  //     if (err) return console.log(err);
-  //     console.log('inside of patch', user);
-  //     res.json(user)
-  //   });
   })
 })
 
@@ -86,51 +62,50 @@ userRouter.get('/main', isLoggedIn, function(req, res){
 })
 
 userRouter.route('/user/:id/food')
-  .post(function(req, res){
-    User.findById(req.params.id, function(err, user){
-      if (err) {
-        console.log("inside of post food");
-        return console.log(err)
-      };
-      console.log(req.body.meal);
-      user.food.push(req.body)
-      user.save(function(err){
-        if (err) return console.log(err);
-        res.json({sucess: true, user: user})
-      })
-     })
-  })
-  .get(function(req, res){
-    User.findById(req.params.id, function(err, user) {
+.post(function(req, res){
+  User.findById(req.params.id, function(err, user){
+    if (err) {
+      console.log("inside of post food");
+      return console.log(err)
+    };
+    console.log(req.body.meal);
+    user.food.push(req.body)
+    user.save(function(err){
       if (err) return console.log(err);
-      // console.log(user.food);
-      res.json(user)
+      res.json({sucess: true, user: user})
     })
   })
+})
+.get(function(req, res){
+  User.findById(req.params.id, function(err, user) {
+    if (err) return console.log(err);
+    // console.log(user.food);
+    res.json(user)
+  })
+})
 
 userRouter.route('/user/:id/food/:foodId')
-  .delete(function(req, res){
-    User.findById(req.params.id, function(err, user){
-      if (err) return console.log(err);
-      if (user.food.id(req.params.foodId)) {
-        var item = user.food.id(req.params.foodId);
-        item.remove()
-        user.save(function(err){
-          if (err) return console.log(err);
-        })
-        res.json({message: 'deleted item successfully', user: user})
-      }
-    })
+.delete(function(req, res){
+  User.findById(req.params.id, function(err, user){
+    if (err) return console.log(err);
+    if (user.food.id(req.params.foodId)) {
+      var item = user.food.id(req.params.foodId);
+      item.remove()
+      user.save(function(err){
+        if (err) return console.log(err);
+      })
+      res.json({message: 'deleted item successfully', user: user})
+    }
   })
+})
 
 userRouter.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}))
 
 userRouter.get('/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: '/main?strategy=google',
-    failureRedirect: '/fail'
-  }));
-
+passport.authenticate('google', {
+  successRedirect: '/main?strategy=google',
+  failureRedirect: '/fail'
+}));
 
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()) return next()
